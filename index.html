@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <style>
+    #field {
+      width: 200px;
+      height: 150px;
+      border: 10px groove black;
+      background-color: #00FF00;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #ball {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 40px;
+      height: 40px;
+      -webkit-transition: all 1s;
+      -moz-transition: all 1s;
+      -o-transition: all 1s;
+      -ms-transition: all 1s;
+      transition: all 1s;
+    }
+  </style>
+</head>
+
+<body style="height:2000px">
+
+  Кликните на любое место поля, чтобы мяч перелетел туда.
+  <br> Мяч никогда не вылетит за границы поля.
+
+
+  <div id="field">
+    <img src="https://js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+  </div>
+
+<script>
+  var field = document.getElementById('field');
+  var ball = document.getElementById('ball');
+  field.onclick = function(event) {
+  var fcords = this.getBoundingClientRect();
+  var fieldInnerCords = {
+  	top: fcords.top + field.clientTop,
+  	left: fcords.left + field.clientLeft
+  };
+  var bcords = {
+    top: event.clientY - fieldInnerCords.top - ball.clientHeight / 2,
+    left : event.clientX - fieldInnerCords.left - ball.clientWidth / 2
+  };
+  if (bcords.top < 0) bcords.top = 0;
+  if (bcords.left < 0) bcords.left = 0;
+  if (bcords.left + ball.clientWidth > field.clientWidth) bcords.left = field.clientWidth - ball.clientWidth;
+  if (bcords.top + ball.clientHeight > field.clientHeight) bcords.top = field.clientHeight - ball.clientHeight;
+  ball.style.left = bcords.left + 'px';
+  ball.style.top = bcords.top + 'px';
+}
+</script>
+</body>
+
+</html>
